@@ -1,0 +1,476 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(42, 42, 42);
+  border-radius: 30px;
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: gray;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hidescroll::-webkit-scrollbar {
+  display: none;
+}
+
+.bg-black-900 {
+   
+  background-color: #070707;
+}
+
+.bg-black-800 {
+
+  background-color: #131313;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hidescroll {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+body {
+  background-color: white;
+}
+
+.trans-slow {
+  transition: all 1000ms ease-in-out;
+}
+
+.trans-slow-2x {
+  transition: all 2000ms ease-in-out;
+}
+
+.trans-mid {
+  transition: all 750ms ease-in-out;
+}
+
+.trans {
+  transition: all 500ms ease-in-out;
+}
+
+.trans-fast {
+  transition: all 100ms ease-in-out;
+}
+
+
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.start-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.evenly {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0%;
+    left: 100px;
+  }
+
+  to {
+    opacity: 100%;
+    left: 0px;
+  }
+}
+
+@keyframes fadeInZoom {
+  from {
+    opacity: 0%;
+    scale: 50%;
+  }
+
+  to {
+    opacity: 100%;
+    scale: 100%;
+  }
+}
+
+@keyframes fadeInBottom {
+  from {
+    opacity: 0%;
+    top: 100px;
+  }
+
+  to {
+    opacity: 100%;
+    top: 0px;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0%;
+    bottom: 100px;
+  }
+
+  to {
+    opacity: 100%;
+    bottom: 0px;
+  }
+}
+
+@keyframes zoom {
+  from {
+    scale: 115%;
+  }
+
+  to {
+    bottom: 100%;
+  }
+}
+
+.zoom {
+  animation: zoom 2s ease-in-out;
+}
+
+.fadeIn {
+
+  animation: fadeIn 2s ease-in-out;
+}
+
+.fadeInRight {
+  position: relative;
+  animation: fadeInRight 2s ease-in-out;
+}
+
+.fadeInZoom {
+  position: relative;
+  animation: fadeInZoom 2s ease-in-out;
+}
+
+.fadeInZoomx2 {
+  position: relative;
+  animation: fadeInZoom 0.9s ease-in;
+}
+
+.fadeInBottom {
+  position: relative;
+  animation: fadeInBottom 2s ease-in-out;
+}
+
+.fadeInUp {
+  position: relative;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+
+/* 
+
+used for Carouse
+*/
+
+
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  margin-left: 0px;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  width: auto;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .embla2 {
+    --slide-spacing: 0rem;
+    --slide-size: 100%;
+    --slide-height: 19rem;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+.embla2 {
+    --slide-spacing: 0rem;
+    --slide-size: 100%;
+    --slide-height: 19rem;
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+ 
+.embla2 {
+  --slide-spacing: 1rem;
+  --slide-size: 50%;
+  --slide-height: 19rem;
+}
+}
+
+@media only screen and (min-width: 992px) {
+.embla2 {
+    --slide-spacing: 1rem;
+    --slide-size: 34.5%;
+    --slide-height: 19rem;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .embla2 {
+      --slide-spacing: 1rem;
+      --slide-size: 34.5%;
+      --slide-height: 19rem;
+    }
+}
+
+
+
+
+.embla2__viewport {
+  overflow: hidden;
+}
+
+.embla2__container {
+  backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-y;
+    margin-left: calc(var(--slide-spacing) );
+    width: auto;
+}
+
+.embla2__slide {
+  flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+    position: relative;
+}
+
+.embla2__slide__img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.emblathumb {
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  --slide-height: 19rem;
+  padding: 1.6rem;
+}
+
+.emblathumb__viewport {
+  overflow: hidden;
+}
+
+.emblathumb__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+
+.emblathumb__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+  position: relative;
+}
+
+.emblathumb__slide__img {
+  display: block;
+  height: var(--slide-height);
+  width: 100%;
+  object-fit: cover;
+}
+
+.emblathumb__slide__number {
+  width: 4.6rem;
+  height: 4.6rem;
+  z-index: 1;
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  border-radius: 50%;
+  background-color: rgba(var(--background-site-rgb-value), 0.85);
+  line-height: 4.6rem;
+  font-weight: 900;
+  text-align: center;
+  pointer-events: none;
+}
+
+.emblathumb__slide__number>span {
+  color: var(--brand-primary);
+  background-image: linear-gradient(45deg,
+      var(--brand-primary),
+      var(--brand-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.6rem;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.emblathumb-thumbs {
+  --thumbs-slide-spacing: 0.8rem;
+  --thumbs-slide-height: 9rem;
+  margin-top: var(--thumbs-slide-spacing);
+}
+
+.emblathumb-thumbs__viewport {
+  overflow: hidden;
+}
+
+.emblathumb-thumbs__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.emblathumb-thumbs__slide {
+  flex: 0 0 28%;
+  min-width: 0;
+  padding-left: var(--thumbs-slide-spacing);
+  position: relative;
+}
+
+@media (min-width: 576px) {
+  .emblathumb-thumbs__slide {
+    flex: 0 0% 18%;
+  }
+    .emblathumb__slide__img {
+      display: block;
+      height: 500px;
+      width: 100%;
+      object-fit: cover;
+    }
+}
+
+.emblathumb-thumbs__slide__button {
+  -webkit-appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  opacity: 0.2;
+  transition: opacity 0.2s;
+}
+
+.emblathumb-thumbs__slide--selected .emblathumb-thumbs__slide__button {
+  opacity: 1;
+}
+
+.emblathumb-thumbs__slide__img {
+  display: block;
+  height: var(--thumbs-slide-height);
+  width: 100%;
+  object-fit: cover;
+}
+
+.emblathumb-thumbs__slide__number {
+  width: 3rem;
+  height: 3rem;
+  z-index: 100;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  border-radius: 50%;
+  background-color: rgba(var(--background-site-rgb-value), 0.85);
+  line-height: 3rem;
+  font-weight: 900;
+  text-align: center;
+  pointer-events: none;
+  color: black;
+}
+
+.emblathumb-thumbs__slide__number>span {
+  color: var(--brand-primary);
+  background-image: linear-gradient(45deg,
+      var(--brand-primary),
+      var(--brand-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.4rem;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Chrome, Safari, Edge, Opera  remove number arrow on input*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
