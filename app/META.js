@@ -1,6 +1,7 @@
 import IMG from "public/Images/image7.jpeg";
-
 import Hat from '../public/Images/IMG_2626.jpg';
+import ban1 from '../public/Images/image0.jpeg';
+import ban2 from '../public/Images/image9.jpeg';
 
 
 export const siteName = 'Humaine Grandeur'
@@ -16,7 +17,7 @@ export const IGFeedURL = 'https://feeds.behold.so/uPB30an9PtEhQZrvqN22'
 
 const img1 = 'https://images.unsplash.com/photo-1697644371824-41d4d0a8a12f?auto=format&fit=crop&q=80&w=3871&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 const img2 = 'https://wwd.com/wp-content/uploads/2016/07/short-shorts-14.jpg?w=1280'
-export const bannerImage = [img1, img2, '']
+export const bannerImage = [ban1, ban2, '']
 
 export const emailCollectorIMG = IMG
 
