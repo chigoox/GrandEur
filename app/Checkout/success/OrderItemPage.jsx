@@ -5,7 +5,6 @@ import { orderNumberPrefix } from '@/app/META'
 import { fetchDocument } from '@/app/myCodes/Database'
 import { sendMail } from '@/app/myCodes/Email'
 import { getRand } from '@/app/myCodes/Util'
-import IMG from '@/public/Images/luxlace.JPG'
 import { Button } from '@nextui-org/react'
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from 'react'
