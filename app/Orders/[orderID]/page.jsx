@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import Maps from '../Componets/Maps';
+
 import OrderDetails from '../Componets/OrderDetails';
 import { addToDoc, deleteDocument, fetchDocument, updateDatabaseItem, watchDocument } from '@/app/myCodes/Database';
 import { usePathname, useRouter } from 'next/navigation'
@@ -195,17 +195,7 @@ export default function page() {
                     </div>
                 </Skeleton>
                 {orderType == 'delivery' && <Skeleton className='rounded-xl h-auto lg:w-3/4 w-full  bg-black' isLoaded={isOrderCreator}>
-                    <Maps
-                        destinationPosition={destinationPosition}
-                        originPosition={originPosition}
-                        orderStatus={orderStatus}
-                        updateOrderLocation={updateOrderLocation}
-                        destination={destination}
-                        orderTracking={orderTracking}
-                        currentDriverLocation={currentDriverLocation}
-                        positionState={[currentLocation, setCurrentLocation]}
-                        driverPrevLocation={driverPrevLocation}
-                    />
+
                 </Skeleton>}
                 <OrderDetails isOrderCreator={isOrderCreator} order={order} />
 
