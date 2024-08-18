@@ -112,7 +112,7 @@ function NavBar() {
 
                 <div className={`evenly gap-3 relative ${showCart ? 'right-3' : ''}`}>
                     <Link className='center' href={'/'}><HomeIcon size={showCart ? 24 : 32} />{!showCart && 'Home'}</Link>
-                    <Link className='center' href={'/Shop'}><ShoppingBagIcon size={showCart ? 24 : 32} />{!showCart && 'Shop'}</Link>
+                    {/*   <Link className='center' href={'/Shop'}><ShoppingBagIcon size={showCart ? 24 : 32} />{!showCart && 'Shop'}</Link> */}
                 </div>
 
                 {<div className={` gap-2 w-[20%] ${showCart ? 'right-2 ' : 'right-4'} ${showMobileMenu ? 'absolute' : '-bottom-8 md:bottom-0'}  flex items-end justify-end`}>

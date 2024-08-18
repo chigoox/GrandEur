@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 export const ProductsList = ({ category, limit, list, search }) => {
     const [productData, setProductData] = useState([])
 
-
     useEffect(() => {
         fetchProducts(category, setProductData, limit, search)
 
