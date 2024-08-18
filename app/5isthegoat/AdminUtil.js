@@ -18,10 +18,8 @@ export const useCreateProductUtil = async (product, runFunAfter) => {
     for (let index = 0; index < product.images.length; index++) {
         const file = product.images[index];
         const url = await useUploader(file, product.name)
-        console.log(url)
         PRODUCT.images.push(url)
-        console.log('images uploaded')
-        console.log(PRODUCT.images)
+
 
     }
     //setup Prices
