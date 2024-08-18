@@ -11,7 +11,7 @@ async function success() {
 
 
     return (
-        <div>
+        <div className='min-h-screen  overflow-hidden text-white bg-black'>
             <OrderItemPage orderID={orderID?.orderID} />
         </div>
     )

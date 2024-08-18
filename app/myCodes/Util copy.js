@@ -8,9 +8,12 @@ export const isDev = () => {
         return false
     }
 }
+
 export const filterNullFromArray = (array) => {
     return array.filter(x => !!x)
 }
+
+
 export const notify = (notification, duration = 5000) => {
     Toastify({
         text: notification,
@@ -28,6 +31,8 @@ export const notify = (notification, duration = 5000) => {
         onClick: function () { } // Callback after click
     }).showToast();
 };
+
+
 
 export function handleInput5(key, value, stateSetter) {
     //const key = target.name

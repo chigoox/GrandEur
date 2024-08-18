@@ -1,11 +1,14 @@
 'use client'
 import { useAUTHListener } from '@/StateManager/AUTHListener'
 import { useCartContext } from '@/StateManager/CartContext'
-import { orderNumberPrefix } from '@/app/META'
-import { fetchDocument } from '@/app/myCodes/Database'
+import Loading from '@/app/Componets/General/Loading'
+import { OrderItem } from '@/app/Orders/Componets/OrderItem'
+import { MONEYFONT } from '@/app/Shop/Componets/ShopItem'
+import { fetchDocument, updateDatabaseItem } from '@/app/myCodes/Database'
 import { sendMail } from '@/app/myCodes/Email'
 import { getRand } from '@/app/myCodes/Util'
 import { Button } from '@nextui-org/react'
+import Link from 'next/link'
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from 'react'
 
@@ -18,80 +21,86 @@ function OrderItemPage({ orderID }) {
     const UID = user.uid ? user.uid : user.gid
     const [showExitButton, setShowExitButton] = useState(false)
     const [emailSent, setEmailSent] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const currentOrder = data?.ORDER.id
+
 
     const getData = async () => {
-
         const orderInfo = UID ? await fetchDocument('User', UID) : null
-        if (orderInfo) setData({ shipping: orderInfo?.ShippingInfo, cart: orderInfo?.cart ? orderInfo?.cart : state.lineItems })
-        return { shipping: orderInfo?.ShippingInfo, cart: orderInfo?.cart ? orderInfo?.cart : state.lineItems }
+        const ORDER = orderInfo?.currentOrder ? await fetchDocument('Orders', orderInfo?.currentOrder) : {}
+
+
+        if (orderInfo && ORDER) setData({ ORDER: ORDER, shipping: orderInfo?.ShippingInfo, cart: ORDER?.orderedItems, currentOrder: orderInfo?.currentOrder, total: Number(ORDER.total) })
+        // return { shipping: orderInfo?.ShippingInfo, cart: ORDER?.orderedItems, currentOrder: orderInfo?.currentOrder, total: Number(ORDER.total), }
 
     }
-    const addArray = (array) => {
-        const mainArray = Array.isArray(array) ? array : Object.values(array ? array : {})
-        const sum = mainArray.reduce((partialSum, a) => partialSum + a, 0)
-        return sum
-    }
-    const [arrayQTY, setArrayQTY] = useState()
+
+
+
+
     const [arrayPrice, setArrayPrice] = useState()
-    const [arrayImages, setArrayImages] = useState()
-    const getArrayToAddQTY = () => {
-        Object.values(data?.cart ? data?.cart : {}).map((order) => {
-            const total = Object.values(order.lineItems ? order.lineItems : {}).map((orderInfo) => {
-                return orderInfo.Qty
-            })
-            setArrayQTY(total)
-            return total
 
-        })
-    }
     const getArrayToAddPrice = () => {
-        Object.values(data?.cart ? data?.cart : {}).map((order) => {
-            const total = Object.values(order.lineItems ? order.lineItems : {}).map((orderInfo) => {
-                return orderInfo.price
-            })
-            setArrayPrice(total)
+        setArrayPrice(data?.cart?.map((order) => {
+            const total = Number(order.price) * Number(order.Qty)
             return total
 
-        })
+        }))
+
+
     }
 
-    const getArrayToAddImages = () => {
-        Object.values(data?.cart ? data?.cart : {}).map((order) => {
-            const total = Object.values(order.lineItems ? order.lineItems : {}).map((orderInfo) => {
-                return orderInfo.images[0]
-            })
-            setArrayImages(total)
-            return total
 
 
-        })
-    }
 
-    if (!arrayQTY) getArrayToAddQTY()
-    if (!arrayPrice) getArrayToAddPrice()
-    if (!arrayImages) getArrayToAddImages()
 
 
     const shipdata = data?.shipping
 
 
 
-    useEffect(() => {
-        if (!emailSent && shipdata) {
-            sendMail(data?.shipping, data?.shipping.email, 'Order Successfull', 'EmailOrderSuccessful', data?.cart.state, orderID)
-            setEmailSent(true)
-        }
+    const addArray = (array) => {
+        const mainArray = Array.isArray(array) ? array : Object.values(array ? array : {})
+        const sum = mainArray.reduce((partialSum, a) => partialSum + a, 0)
+        return sum
+    }
 
+    const orderTotal = addArray(arrayPrice)
+
+    useEffect(() => {
+        const sendEmail = async () => {
+            setIsLoading(true)
+            const order = currentOrder ? await fetchDocument('Orders', currentOrder) : null
+            if (!emailSent && shipdata && !order?.emailComfirmationSent) {
+                await sendMail(data?.shipping, data?.shipping.email, 'Order Successfull', 'EmailOrderSuccessful', { cart: data?.cart, total: orderTotal }, orderID)
+                setEmailSent(true)
+                await updateDatabaseItem('Orders', currentOrder, 'emailComfirmationSent', true)
+            }
+            setIsLoading(false)
+
+
+        }
+        sendEmail()
+        if (!arrayPrice) getArrayToAddPrice()
 
 
     }, [data])
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (!data?.currentOrder) run()
+        }, 3000);
+
+    }, [UID, data])
+
+
 
     const run = async () => {
-        const x = await getData()
+        setIsLoading(true)
+        await getData()
 
         const orderData = UID ? await fetchDocument('User', UID) : undefined
-
+        setIsLoading(false)
         setTimeout(() => {
             setShowExitButton(true)
             dispatch({ type: "EMPTY_CART", value: null })
@@ -109,53 +118,52 @@ function OrderItemPage({ orderID }) {
 
 
 
-    const orderMap = Object.values(data?.cart?.state?.lineItems ? data?.cart?.state?.lineItems : {})
+    const orderMap = Object.values(data?.cart ? data?.cart : {})
 
 
 
-    if (!data) run()
+
 
 
 
 
     return (
-        <div className=' center h-[40rem] relative text-white flex md:flex-row flex-col md:gap-0 gap-24 bg-black'>
-            <div className='h-96 md:w-[50%] w-[90%] bg-black flex flex-col relative'>
-                <h1 className='text-4xl text-white font-extrabold text-center'>Thank you for ordering</h1>
-                <h1 className='text-sm font-light text-center text-white'>an email confirmation has been sent to {data?.shipping?.email || user?.email}</h1>
+        <div className='  p-4 lg:px-10 m-auto lg:w-1/2 flex-col item-center h-[40rem] mt-12 relative text-white flex md:gap-0 gap-2 bg-black w-full overflow-hidden'>
+            {isLoading && <Loading />}
 
-                <div className='h-20 w-full mt-10'>
-                    <h1 className='text-2xl text-white'>Items ordered</h1>
+            <h1 className='text-4xl text-white mt-12 font-extrabold text-center'>Thank you for ordering</h1>
+            <h1 className='text-sm font-light text-center text-white'>an email confirmation has been sent to {data?.shipping?.email || user?.email}</h1>
 
-                    <div className='grid grid-cols-2 p-2 h-32 border-y overflow-y-scroll hidescroll  md:grid-cols-3 gap-1 w-full'>
-                        {orderMap.map((item) => {
-                            return (
-                                <div key={item.name + getRand(9999)}>
-                                    <div className='bg-white m-auto text-black center border-2 w-12 h-12 overflow-hidden rounded-full relative'>
-                                        <h1 className='absolute h-full w-full text-2xl center text-white bg-opacity-50 bg-black'>{item.Qty}</h1>
-                                    </div>
-                                    <h1 className='bg-opacity-25 text-xs text-center'>{item.name}</h1>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    <div className='center-col p-2'>
-                        <h1>Total: {data?.cart?.state?.total}</h1>
-                        {showExitButton &&
-                            <Button onPress={() => { push('/Shop') }}>
+            <div className='h-20 w-full mt-10'>
+                <h1 className='text-2xl text-white'>Items ordered</h1>
+
+                <div className='grid grid-cols-2 p-2 h-32 border-y overflow-y-scroll hidescroll  md:grid-cols-3 gap-1 w-full'>
+                    {orderMap.map((item) => {
+                        return (
+                            <OrderItem isLoaded={item} item={item} />
+                        )
+                    })}
+                </div>
+                <div className={`${MONEYFONT} center-col p-2`}>
+                    <h1 className='font-bold text-3xl border-b mb-5'>Total: $ {orderTotal}</h1>
+                    {showExitButton &&
+                        <div className='center gap-4'>
+                            <Button color='primary' onPress={() => { push('/Shop') }}>
                                 Continue to store
-                            </Button>}
+                            </Button>
 
-                    </div>
+                            <Link color='success' href={`/Orders/${data?.currentOrder}`}>
+                                View Order Details
+                            </Link>
+                        </div>
 
-
+                    }
 
                 </div>
-            </div>
-            <div className='h-40 overflow-hidden'>
+
+
 
             </div>
-
         </div>
     )
 }

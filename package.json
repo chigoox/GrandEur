@@ -1,5 +1,5 @@
 {
-  "name": "5oclock",
+  "name": "HumaineGrandeur",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,12 +13,14 @@
     "@react-email/components": "^0.0.7",
     "@stripe/react-stripe-js": "^1.16.5",
     "@stripe/stripe-js": "^1.54.2",
+    "@tinymce/tinymce-react": "^5.0.0",
     "antd": "^5.10.0",
     "autoprefixer": "10.4.15",
     "axios": "^1.5.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
     "debug": "^4.3.4",
+    "masonry-layout": "^4.2.2",
     "dropzone": "^6.0.0-beta.2",
     "embla-carousel-autoplay": "^8.0.0-rc12",
     "embla-carousel-react": "^8.0.0-rc12",
@@ -26,6 +28,7 @@
     "firebase-admin": "^11.11.0",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.263.1",
+    "raw-loader": "^4.0.2",
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
     "next": "^13.5.4",
@@ -39,6 +42,7 @@
     "supports-color": "^9.4.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
+    "tinymce": "^7.0.0",
     "toastify-js": "^1.12.0"
   },
   "devDependencies": {

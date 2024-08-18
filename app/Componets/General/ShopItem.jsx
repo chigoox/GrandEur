@@ -32,18 +32,18 @@ function ShopItem({ shopItems, location = 'HotTools', onShopPage }) {
         awaitLoading()
     }, [name])
     return (
-        <div className='h-auto   fadeInZoomx2 flex-shrink-0 m-auto  w-40 md:h-64  md:w-64  my-2 shadow-sm shadow-black-800   border-[#474747] hover:border-white hover:font-extrabold    relative   overflow-hidden'>
+        <div className='h-64   fadeInZoomx2 flex-shrink-0 m-auto  w-40 md:h-64  md:w-64  my-2 shadow-sm shadow-black-800   border-[#474747] hover:border-white hover:font-extrabold    relative   overflow-hidden'>
             <ProductView
                 showShopView={ShowQuickView}
                 setShowShopView={setShowQuickView}
             />
             <div className='group'>
                 <Link className='center-col ' href={`/Shop/${location}/${name?.replace(/\s/g, '')}`}>
-                    <Skeleton isLoaded={productsLoaded} className='w-auto h-auto  bg-gray-400 '>
-                        <Card className={'w-full h-64 md:h-40 md:w-40 border-4 relative overflow-hidden rounded-none bg-black'}>
+                    <Skeleton isLoaded={productsLoaded} className='w-auto h-auto rounded-full bg-gray-400 '>
+                        <Card className={'h-40 w-40 border-4 relative rounded-full overflow-hidden bg-black'}>
                             <Image width={1920} height={1080} quality={100} src={images[0]} className=' m-auto h-full w-full object-cover' alt="" />
                             <div className={'font.className absolute bg-black trans bg-opacity-50 hover:bg-opacity-0 h-full w-full center'}>
-                                <h1 className='md:text-lg group-hover:bg-black text-white  w-60  p-1  text-center max-h-auto overflow-hidden md:max-h-20'>{name.substr(0, 50)}{name.length > 50 ? '...' : ''}</h1>
+                                <h1 className='md:text-lg group-hover:bg-black text-white  w-60  p-1  text-center max-h-16 overflow-hidden md:max-h-20'>{name.substr(0, 50)}{name.length > 50 ? '...' : ''}</h1>
                             </div>
                         </Card>
                     </Skeleton>
@@ -59,7 +59,7 @@ function ShopItem({ shopItems, location = 'HotTools', onShopPage }) {
 
                     </div>
                 </Link>
-                <Button onPress={(event) => { toggleQuickView(event) }} className='w-fit m-auto border font-bold block md:hidden md:group-hover:block   hover:bg-black-800 '>
+                <Button onPress={(event) => { toggleQuickView(event) }} className='w-fit m-auto  font-bold block md:hidden md:group-hover:block   hover:bg-black-800 '>
                     Add to cart
                 </Button>
 
@@ -81,5 +81,3 @@ function ShopItem({ shopItems, location = 'HotTools', onShopPage }) {
 }
 
 export default ShopItem
-
-

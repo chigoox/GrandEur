@@ -1,88 +1,34 @@
-'use client'
-import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, CheckboxGroup, Input, Select, SelectItem, Textarea } from "@nextui-org/react"
-import { message } from "antd"
-import { useEffect, useState } from "react"
-import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai"
-import { Uploader } from "../Componets/General/Uploader"
-import { category } from "../META"
-import { updateDatabaseItem } from "../myCodes/Database"
-import { createProduct } from "../myCodes/Stripe"
-import { createArray } from "../myCodes/Util"
+import React from "react"
+import { Admin } from "./Admin"
 
-
-
-
-
-
-function Admin() {
-    const [priceIDCount, setPriceIDCount] = useState(1)
-    const [productData, setProductData] = useState()
-    const [priceData, setPriceData] = useState({ for: productData?.productName?.replace(/\s/g, '') })
-    const [bannerData, setBannerData] = useState()
-
-
-    const updateInfo = (event, setter) => {
-        console.log(event.target.value, event.target.name)
-        const { target } = event
-        setter(oldState => ({ ...oldState, [target?.name]: target?.value }))
-    }
-    const updatePrice = (event, setter, index) => {
-        const { target } = event
-        setter(oldState => ({ ...oldState, ['price' + index]: { ...oldState['price' + index], [target?.name]: (index == 0 && productData?.price && target?.name == 'amount') ? productData.price : target.value } }))
-    }
-
-
-    if (priceIDCount < 1) setPriceIDCount(1)
-    if (priceIDCount > 100) setPriceIDCount(100)
-    const updateBanner = () => {
-        if (bannerData.title) updateDatabaseItem('Admin', 'Banner', 'title', bannerData.title)
-        if (bannerData.link) updateDatabaseItem('Admin', 'Banner', 'link', bannerData.link)
-        if (bannerData.message) updateDatabaseItem('Admin', 'Banner', 'message', bannerData.message)
-
-
-    }
-    const create = async () => {
-        if (priceData['price0']?.priceName &&
-            priceData['price0']?.qty &&
-            productData?.productName &&
-            productData?.productDesc &&
-            productData?.img &&
-            productData?.price &&
-            productData?.category
-        ) {
-            try {
-                await createProduct(productData, priceData)
-                console.log(productData, priceData)
-                setProductData({ productName: '', productDesc: '', productFeat: '', category: '', price: '', isNew: false, isBestSelling: false, })
-                setPriceData({ price0: { priceName: '', qty: '', amount: '' } })
-                setPriceIDCount(1)
-                message.success('Item Created', 5)
-
-            } catch (error) {
-                console.log(error)
-                message.error(error.message, 5)
-
-            }
-        } else {
-            if (!productData?.productName) message.error('Missing product name', 5)
-            if (!productData?.productDesc) message.error('Missing product description', 5)
-            if (!productData?.img) message.error('Missing product images', 5)
-            if (!productData?.price) message.error('Missing product price', 5)
-            if (!productData?.category) message.error('Missing product category', 5)
-            if (!priceData['price0']?.priceName) message.error('Missing variant name', 5)
-            if (!priceData['price0']?.qty) message.error('Missing variant QTY', 5)
-        }
-    }
-
-
-
-
-    useEffect(() => { setPriceData(old => ({ ...old, for: productData?.productName?.replace(/\s/g, '') })) }, [productData])
+async function Page() {
 
     return (
-        <div className="bg-black p-2  md:p-4">
+        <div className="bg-black min-h-screen  mt-20 overflow-hidden relative">
+            <Admin />
+        </div>
 
-            <Card className="bg-black-800 w-[90%] md:w-[60%] mx-auto">
+
+
+
+
+    )
+}
+
+export default Page
+
+
+/* 
+
+        metadata: priceMeta,
+        nickname: priceName,
+        unit_amount: priceAmount * 100,
+
+
+
+
+
+         <Card className="bg-black-800 w-[90%] md:w-[60%] mx-auto">
                 <CardHeader className="bg-rose-500 text-white  font-extrabold">
                     <h1 className="text-center text-xl w-full">Product Data</h1>
                 </CardHeader>
@@ -279,21 +225,6 @@ function Admin() {
                 </CardFooter>
             </Card>
 
-
-
-
-        </div>
-    )
-}
-
-export default Admin
-
-
-/* 
-
-        metadata: priceMeta,
-        nickname: priceName,
-        unit_amount: priceAmount * 100,
 
 
 */
